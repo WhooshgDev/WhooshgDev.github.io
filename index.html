@@ -187,7 +187,11 @@
   .modal-btn-cancel:hover { color: var(--text); }
 
   /* PROGRESS */
-  .progress-list { display: flex; flex-direction: column; gap: 8px; }
+  .progress-list { display: flex; flex-direction: column; gap: 8px; max-height: 340px; overflow-y: auto; padding-right: 6px; scroll-behavior: smooth; }
+  .progress-list::-webkit-scrollbar { width: 4px; }
+  .progress-list::-webkit-scrollbar-track { background: var(--bg2); border-radius: 99px; }
+  .progress-list::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 99px; }
+  .progress-list::-webkit-scrollbar-thumb:hover { background: var(--accent); }
   .progress-item { display: grid; grid-template-columns: 210px 1fr 56px; align-items: center; gap: 20px; padding: 18px 22px; background: var(--surface); border: 1.5px solid var(--border); border-radius: 4px; transition: border-color 0.2s; }
   .progress-item:hover { border-color: var(--border2); }
   .progress-item.done { border-left: 3px solid var(--accent); }
@@ -203,6 +207,7 @@
   .progress-item.done .progress-pct { color: var(--accent); }
   .progress-item.active .progress-pct { color: var(--accent2); }
 
+
   /* FOOTER */
   footer { border-top: 1px solid var(--border); padding: 36px 0; display: flex; justify-content: space-between; align-items: center; position: relative; z-index: 10; }
   .footer-left { color: var(--muted); font-size: 13px; }
@@ -214,69 +219,6 @@
   @keyframes fadeUp { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: translateY(0); } }
   .reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.55s ease, transform 0.55s ease; }
   .reveal.visible { opacity: 1; transform: translateY(0); }
-
-  /* 2048 GAME */
-  .game-wrap { max-width: 420px; position: relative; }
-  .game-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
-  .game-scores { display: flex; gap: 10px; }
-  .score-box { background: var(--bg2); border: 1.5px solid var(--border); border-radius: 4px; padding: 8px 20px; text-align: center; min-width: 72px; }
-  .score-label { display: block; font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 2px; }
-  .score-val { font-family: var(--font-display); font-size: 22px; font-weight: 600; color: var(--text); }
-  .game-btn { font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.06em; text-transform: uppercase; padding: 9px 18px; background: var(--accent); color: var(--bg); border: none; border-radius: 2px; cursor: pointer; font-weight: 700; transition: opacity 0.2s; display: block; }
-  .game-btn:hover { opacity: 0.85; }
-  .game-board {
-    position: relative;
-    background: var(--bg2);
-    border-radius: 6px;
-    padding: 10px;
-    border: 1.5px solid var(--border);
-    user-select: none;
-    touch-action: none;
-  }
-  .game-grid-bg {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 10px;
-  }
-  .cell-bg {
-    background: var(--border);
-    border-radius: 3px;
-    width: 100%;
-    padding-bottom: 100%;
-  }
-  .game-tiles {
-    position: absolute;
-    inset: 10px;
-    pointer-events: none;
-  }
-  @keyframes tileAppear { from { transform: scale(0.4); opacity: 0; } to { transform: scale(1); opacity: 1; } }
-  @keyframes tileMerge  { 0%{transform:scale(1)} 40%{transform:scale(1.2)} 100%{transform:scale(1)} }
-  .game-hint { font-size: 12px; color: var(--muted); margin-top: 12px; text-align: center; letter-spacing: 0.03em; }
-  .key-display { display: flex; flex-direction: column; align-items: center; gap: 6px; margin-top: 14px; }
-  .key-row { display: flex; gap: 6px; }
-  .key-btn {
-    width: 38px; height: 38px;
-    background: var(--surface);
-    border: 1.5px solid var(--border);
-    border-radius: 6px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 16px; color: var(--muted);
-    transition: all 0.08s ease;
-    box-shadow: 0 3px 0 var(--border);
-  }
-  .key-btn.pressed {
-    background: var(--accent);
-    border-color: var(--accent);
-    color: var(--bg);
-    transform: translateY(3px);
-    box-shadow: 0 0px 0 var(--accent);
-    filter: brightness(1.1);
-  }
-  .game-over-overlay, .game-win-overlay { position: absolute; inset: 0; background: rgba(245,240,232,0.92); border-radius: 6px; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(4px); }
-  html.dark .game-over-overlay, html.dark .game-win-overlay { background: rgba(14,14,18,0.92); }
-  .game-over-box { text-align: center; }
-  .game-over-title { font-family: var(--font-display); font-size: 28px; font-weight: 600; font-style: italic; color: var(--text); margin-bottom: 8px; }
-  .game-over-score { font-size: 14px; color: var(--muted); margin-bottom: 20px; }
 
   /* CONTACT */
   .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
@@ -326,8 +268,6 @@
   <div class="nav-links">
     <a href="#projects">Projects</a>
     <a href="#progress">Progress</a>
-    <a href="#kudos">Kudos</a>
-    <a href="#game">2048</a>
     <a href="#contact">Contact</a>
     <a href="https://github.com/WhooshgDev" target="_blank">GitHub ↗</a>
     <button class="edit-nav-btn" id="edit-nav-btn" onclick="handleEditClick()">✦ Edit</button>
@@ -358,7 +298,7 @@
         </div>
         <div class="terminal-body">
           <div class="terminal-line"><span class="prompt">❯</span><span class="cmd">python about.py</span></div>
-          <div class="terminal-line output"><span>name = <span class="str">"Hieu Pham Xuan"</span></span></div>
+          <div class="terminal-line output"><span>name = <span class="str">"Hieu Pham"</span></span></div>
           <div class="terminal-line output"><span>university = <span class="str">"Hanoi University of Science and Technology (HUST)"</span></span></div>
           <div class="terminal-line output"><span>focus = <span class="lst">["Machine Learning", "Deep Learning", "Data Science"]</span></span></div>
           <div class="terminal-line output"><span>current_stack = <span class="lst">["Python", "PyTorch", "NumPy", "Scientific Computing"]</span></span></div>
@@ -423,6 +363,23 @@
         <button class="form-submit" onclick="addProject()">+ Add Project</button>
       </div>
       <p class="form-hint">Projects are saved in your browser and persist across reloads. To exit edit mode click <code>✦ Edit</code> again.</p>
+      <div style="margin-top:20px;padding-top:20px;border-top:1px solid var(--border)">
+        <div class="panel-title" style="font-size:16px;margin-bottom:14px">Change Password</div>
+        <div class="form-grid">
+          <div class="form-group">
+            <label class="form-label">New Password</label>
+            <input class="form-input" type="password" id="new-pw" placeholder="Enter new password">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Confirm Password</label>
+            <input class="form-input" type="password" id="confirm-pw" placeholder="Confirm new password">
+          </div>
+        </div>
+        <div style="margin-top:12px;display:flex;align-items:center;gap:12px">
+          <button class="form-submit" onclick="changePassword()">Update Password</button>
+          <span id="pw-change-msg" style="font-size:12px;color:var(--accent);display:none"></span>
+        </div>
+      </div>
     </div>
 
     <div class="filter-bar reveal" id="filter-bar">
@@ -464,79 +421,18 @@
     <div class="progress-list reveal" id="progress-list"></div>
   </section>
 
-  <!-- GAME -->
-  <section id="game">
-    <div class="section-header reveal">
-      <span class="section-num">04</span>
-      <h2 class="section-title">2048</h2>
-      <div class="section-line"></div>
-    </div>
-    <div class="game-wrap reveal">
-      <div class="game-header">
-        <div class="game-scores">
-          <div class="score-box">
-            <span class="score-label">Score</span>
-            <span class="score-val" id="g-score">0</span>
-          </div>
-          <div class="score-box">
-            <span class="score-label">Best</span>
-            <span class="score-val" id="g-best">0</span>
-          </div>
-        </div>
-        <div class="game-btns">
-          <button class="game-btn" onclick="newGame()">New Game</button>
-        </div>
-      </div>
-      <div class="game-board" id="game-board">
-        <div class="game-grid-bg">
-          <div class="cell-bg"></div><div class="cell-bg"></div><div class="cell-bg"></div><div class="cell-bg"></div>
-          <div class="cell-bg"></div><div class="cell-bg"></div><div class="cell-bg"></div><div class="cell-bg"></div>
-          <div class="cell-bg"></div><div class="cell-bg"></div><div class="cell-bg"></div><div class="cell-bg"></div>
-          <div class="cell-bg"></div><div class="cell-bg"></div><div class="cell-bg"></div><div class="cell-bg"></div>
-        </div>
-        <div class="game-tiles" id="game-tiles"></div>
-      </div>
-      <p class="game-hint">Arrow keys or WASD to play · Swipe on mobile</p>
-      <div class="key-display">
-        <div class="key-row">
-          <div class="key-btn" id="key-up">↑</div>
-        </div>
-        <div class="key-row">
-          <div class="key-btn" id="key-left">←</div>
-          <div class="key-btn" id="key-down">↓</div>
-          <div class="key-btn" id="key-right">→</div>
-        </div>
-      </div>
-      <div class="game-over-overlay" id="game-over" style="display:none">
-        <div class="game-over-box">
-          <div class="game-over-title">Game Over</div>
-          <div class="game-over-score" id="go-score"></div>
-          <button class="game-btn" onclick="newGame()">Try Again</button>
-        </div>
-      </div>
-      <div class="game-win-overlay" id="game-win" style="display:none">
-        <div class="game-over-box">
-          <div class="game-over-title">You reached 2048! 🎉</div>
-          <div class="game-over-score" id="gw-score"></div>
-          <button class="game-btn" onclick="keepPlaying()">Keep Going</button>
-          <button class="game-btn" style="margin-top:8px;background:var(--bg2);color:var(--text);border:1.5px solid var(--border)" onclick="newGame()">New Game</button>
-        </div>
-      </div>
-    </div>
-  </section>
-
   <!-- CONTACT -->
   <section id="contact">
     <div class="section-header reveal">
-      <span class="section-num">05</span>
+      <span class="section-num">03</span>
       <h2 class="section-title">Get in Touch</h2>
       <div class="section-line"></div>
     </div>
     <div class="contact-grid reveal">
-      <a class="contact-card" href="/cdn-cgi/l/email-protection#4f36203a3d0f2a222e2623612c2022">
+      <a class="contact-card" href="mailto:hieudth25@gmail.com">
         <span class="contact-card-icon">✉️</span>
         <span class="contact-card-label">Email</span>
-        <span class="contact-card-value"><span class="__cf_email__" data-cfemail="bfc6d0cacdffdad2ded6d391dcd0d2">[hieudth25@gmail.com&#160;]</span></span>
+        <span class="contact-card-value">hieudth25@gmail.com</span>
         <span class="contact-card-arrow">Send a message ↗</span>
       </a>
       <a class="contact-card" href="https://github.com/WhooshgDev" target="_blank">
@@ -554,20 +450,15 @@
 
 <div class="container">
   <footer>
-    <div class="footer-left">Built by <strong>Hieu Pham</strong> · HUST · 2025</div>
+    <div class="footer-left">Built by <strong>WhooshgDev</strong> · HUST · 2026</div>
     <div class="footer-links">
       <a href="https://github.com/WhooshgDev" target="_blank">GitHub</a>
-      <a href="/cdn-cgi/l/email-protection#374e58424577525a565e5b1954585a">Email</a>
+      <a href="mailto:hieudth25@gmail.com">Email</a>
     </div>
   </footer>
 </div>
 
 <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-  // ─── PASSWORD (SHA-256 hashed — plaintext never stored in source) ────────
-  // To change your password: open browser console and run:
-  //   crypto.subtle.digest('SHA-256', new TextEncoder().encode('yournewpassword'))
-  //     .then(b => console.log([...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,'0')).join('')))
-  // Then paste the result below as PASS_HASH.
   const PASS_HASH = '2753ad6b99051f47f3511c11f3abfe0377bff4b2061c12c440351bae20ee2e10';
 
   async function hashPassword(pw) {
@@ -594,12 +485,12 @@
 
   async function confirmPassword() {
     const val = document.getElementById('pw-input').value;
+    const activeHash = localStorage.getItem('hieu-pw-hash') || PASS_HASH;
     let match = false;
     try {
       const hashed = await hashPassword(val);
-      match = (hashed === PASS_HASH);
+      match = (hashed === activeHash);
     } catch(e) {
-      // fallback if crypto.subtle unavailable (http context)
       match = (val === atob('aGlldTIwMjU='));
     }
     if (match) {
@@ -626,6 +517,28 @@
     document.body.classList.remove('edit-mode');
     document.getElementById('edit-nav-btn').classList.remove('active');
     document.getElementById('edit-nav-btn').textContent = '✦ Edit';
+  }
+
+  async function changePassword() {
+    const np = document.getElementById('new-pw').value;
+    const cp = document.getElementById('confirm-pw').value;
+    const msg = document.getElementById('pw-change-msg');
+    if (!np) { showPwMsg('Enter a new password.', 'var(--accent3)'); return; }
+    if (np !== cp) { showPwMsg('Passwords don\'t match.', 'var(--accent3)'); return; }
+    if (np.length < 4) { showPwMsg('Too short — use at least 4 characters.', 'var(--accent3)'); return; }
+    const hash = await hashPassword(np);
+    localStorage.setItem('hieu-pw-hash', hash);
+    document.getElementById('new-pw').value = '';
+    document.getElementById('confirm-pw').value = '';
+    showPwMsg('✓ Password updated!', 'var(--accent)');
+  }
+
+  function showPwMsg(text, color) {
+    const msg = document.getElementById('pw-change-msg');
+    msg.textContent = text;
+    msg.style.color = color;
+    msg.style.display = 'inline';
+    setTimeout(() => { msg.style.display = 'none'; }, 3000);
   }
 
   // ─── PROJECTS DATA ───────────────────────────────────────
@@ -831,20 +744,6 @@
     document.getElementById('theme-icon').textContent = '🌙';
   }
 
-  // ─── KUDOS ──────────────────────────────────────────────
-  let kudoCount = 0;
-  async function loadKudos() {
-    try { const s = await window.storage.get('kudos-hieu'); kudoCount = s ? parseInt(s.value) : 0; } catch { kudoCount = 0; }
-    document.getElementById('kudo-count').innerText = kudoCount;
-  }
-  async function addKudo() {
-    kudoCount++;
-    const el = document.getElementById('kudo-count');
-    el.innerText = kudoCount;
-    el.classList.remove('bump'); void el.offsetWidth; el.classList.add('bump');
-    try { await window.storage.set('kudos-hieu', String(kudoCount), true); } catch {}
-  }
-  loadKudos();
 
   // ─── SCROLL REVEAL ──────────────────────────────────────
   const observer = new IntersectionObserver((entries) => {
@@ -859,232 +758,6 @@
   }, { threshold: 0.1 });
   document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-
-  // ─── 2048 GAME ───────────────────────────────────────────
-  const COLORS = {
-    2:    ['#e8f5e9','#2d6a4f'], 4:    ['#c8e6c9','#2d6a4f'],
-    8:    ['#a5d6a7','#1a4731'], 16:   ['#81c784','#fff'],
-    32:   ['#66bb6a','#fff'],    64:   ['#4caf50','#fff'],
-    128:  ['#43a047','#fff'],    256:  ['#388e3c','#fff'],
-    512:  ['#2e7d32','#fff'],    1024: ['#1b5e20','#fff'],
-    2048: ['#c05621','#fff'],
-  };
-
-  let gBoard, gScore, gBest, gWon, gActive, gBusy;
-
-  function cellSz() {
-    return (document.getElementById('game-board').offsetWidth - 20 - 30) / 4;
-  }
-
-  function pos(r, c) {
-    const s = cellSz(), g = 10;
-    return { x: c*(s+g), y: r*(s+g) };
-  }
-
-  function makeEl(val, r, c, anim) {
-    const [bg, fg] = COLORS[val] || ['#111','#fff'];
-    const s  = cellSz();
-    const fs = val < 100 ? s*.42 : val < 1000 ? s*.34 : s*.26;
-    const p  = pos(r, c);
-    const el = document.createElement('div');
-    el.style.cssText =
-      `position:absolute;width:${s}px;height:${s}px;` +
-      `left:${p.x}px;top:${p.y}px;` +
-      `background:${bg};color:${fg};border-radius:4px;` +
-      `display:flex;align-items:center;justify-content:center;` +
-      `font-family:var(--font-display);font-weight:600;font-style:italic;` +
-      `font-size:${Math.round(fs)}px;` +
-      (anim ? 'animation:tileAppear .18s ease;' : '');
-    el.textContent = val;
-    return el;
-  }
-
-  function fullRender() {
-    const cont = document.getElementById('game-tiles');
-    cont.innerHTML = '';
-    gBoard.forEach((row, r) => row.forEach((v, c) => {
-      if (v) cont.appendChild(makeEl(v, r, c, false));
-    }));
-    updateHUD();
-  }
-
-  function updateHUD() {
-    document.getElementById('g-score').textContent = gScore;
-    if (gScore > gBest) { gBest = gScore; localStorage.setItem('2048-best', gBest); }
-    document.getElementById('g-best').textContent = gBest;
-  }
-
-  function spawnRandom(animated) {
-    const empty = [];
-    gBoard.forEach((row, r) => row.forEach((v, c) => { if (!v) empty.push([r,c]); }));
-    if (!empty.length) return;
-    const [r, c] = empty[Math.floor(Math.random() * empty.length)];
-    gBoard[r][c] = Math.random() < .9 ? 2 : 4;
-    if (animated) {
-      document.getElementById('game-tiles').appendChild(makeEl(gBoard[r][c], r, c, true));
-    }
-  }
-
-  // Slide one array left. Returns { out, moves: [{from, to, merged}] }
-  function slideArr(arr) {
-    const vals = arr.map((v,i) => v ? {v,i} : null).filter(Boolean);
-    const moves = [], out = [0,0,0,0];
-    let ti = 0, vi = 0;
-    while (vi < vals.length) {
-      if (vi+1 < vals.length && vals[vi].v === vals[vi+1].v) {
-        out[ti] = vals[vi].v * 2;
-        gScore += out[ti];
-        moves.push({from: vals[vi].i,   to: ti, merged: false});
-        moves.push({from: vals[vi+1].i, to: ti, merged: true });
-        vi += 2;
-      } else {
-        out[ti] = vals[vi].v;
-        moves.push({from: vals[vi].i, to: ti, merged: false});
-        vi++;
-      }
-      ti++;
-    }
-    return { out, moves };
-  }
-
-  function move(dir) {
-    if (!gActive || gBusy) return;
-    flashKey(dir);
-
-    const s = cellSz(), g = 10;
-    const cont = document.getElementById('game-tiles');
-    const scoreBefore = gScore;
-
-    // Map current tile elements by grid position
-    const snap = {}; // "r,c" -> el
-    cont.querySelectorAll('div').forEach(el => {
-      const c = Math.round(parseFloat(el.style.left) / (s+g));
-      const r = Math.round(parseFloat(el.style.top)  / (s+g));
-      snap[`${r},${c}`] = el;
-    });
-
-    // Build new board and animation list
-    const newBoard = Array(4).fill(null).map(()=>Array(4).fill(0));
-    const anims = []; // {el, toR, toC, kill}
-    let changed = false;
-
-    for (let i = 0; i < 4; i++) {
-      let arr, fromRC, toRC;
-      if (dir==='left')  { arr=gBoard[i]; fromRC=(j)=>[i,j]; toRC=(j)=>[i,j]; }
-      if (dir==='right') { arr=[...gBoard[i]].reverse(); fromRC=(j)=>[i,3-j]; toRC=(j)=>[i,3-j]; }
-      if (dir==='up')    { arr=gBoard.map(r=>r[i]); fromRC=(j)=>[j,i]; toRC=(j)=>[j,i]; }
-      if (dir==='down')  { arr=gBoard.map(r=>r[i]).reverse(); fromRC=(j)=>[3-j,i]; toRC=(j)=>[3-j,i]; }
-
-      const { out, moves } = slideArr(arr);
-      const finalOut = (dir==='right'||dir==='down') ? [...out].reverse() : out;
-
-      finalOut.forEach((v,j) => {
-        if (dir==='left'||dir==='right') newBoard[i][j] = v;
-        else                             newBoard[j][i] = v;
-      });
-
-      moves.forEach(mv => {
-        const [fr, fc] = fromRC(mv.from);
-        const destIdx  = (dir==='right'||dir==='down') ? 3-mv.to : mv.to;
-        const [tr, tc] = toRC(destIdx);
-        const el = snap[`${fr},${fc}`];
-        if (!el) return;
-        if (fr!==tr || fc!==tc) changed = true;
-        anims.push({ el, toR: tr, toC: tc, kill: mv.merged });
-      });
-    }
-
-    if (!changed && JSON.stringify(gBoard)===JSON.stringify(newBoard)) {
-      gScore = scoreBefore;
-      return;
-    }
-
-    gBusy = true;
-    gBoard = newBoard;
-
-    // Slide all tiles
-    anims.forEach(a => {
-      const p = pos(a.toR, a.toC);
-      a.el.style.transition = 'left .12s ease, top .12s ease';
-      a.el.style.left = p.x + 'px';
-      a.el.style.top  = p.y + 'px';
-      if (a.kill) a.el.style.opacity = '0';
-    });
-
-    setTimeout(() => {
-      // Full clean re-render
-      cont.innerHTML = '';
-      gBoard.forEach((row,r) => row.forEach((v,c) => {
-        if (v) cont.appendChild(makeEl(v,r,c,false));
-      }));
-      // Spawn new tile
-      spawnRandom(true);
-      updateHUD();
-      gBusy = false;
-
-      if (!gWon && gBoard.some(r=>r.includes(2048))) {
-        gActive = false;
-        document.getElementById('gw-score').textContent = 'Score: '+gScore;
-        document.getElementById('game-win').style.display = 'flex';
-        return;
-      }
-      if (!canMove()) {
-        gActive = false;
-        document.getElementById('go-score').textContent = 'Final score: '+gScore;
-        document.getElementById('game-over').style.display = 'flex';
-      }
-    }, 130);
-  }
-
-  function canMove() {
-    for (let r=0;r<4;r++) for (let c=0;c<4;c++) {
-      if (!gBoard[r][c]) return true;
-      if (c<3 && gBoard[r][c]===gBoard[r][c+1]) return true;
-      if (r<3 && gBoard[r][c]===gBoard[r+1][c]) return true;
-    }
-    return false;
-  }
-
-  function newGame() {
-    gBoard = Array(4).fill(null).map(()=>Array(4).fill(0));
-    gScore = 0; gWon = false; gActive = true; gBusy = false;
-    gBest = parseInt(localStorage.getItem('2048-best')||'0');
-    document.getElementById('game-over').style.display = 'none';
-    document.getElementById('game-win').style.display  = 'none';
-    document.getElementById('game-tiles').innerHTML = '';
-    spawnRandom(false); spawnRandom(false);
-    fullRender();
-  }
-
-  function keepPlaying() {
-    gWon = true; gActive = true;
-    document.getElementById('game-win').style.display = 'none';
-  }
-
-  function flashKey(dir) {
-    const ids = {left:'key-left',right:'key-right',up:'key-up',down:'key-down'};
-    const el = document.getElementById(ids[dir]);
-    if (!el) return;
-    el.classList.add('pressed');
-    setTimeout(()=>el.classList.remove('pressed'), 180);
-  }
-
-  document.addEventListener('keydown', e => {
-    const m = {ArrowLeft:'left',ArrowRight:'right',ArrowUp:'up',ArrowDown:'down',
-               a:'left',d:'right',w:'up',s:'down',A:'left',D:'right',W:'up',S:'down'};
-    if (m[e.key]) { e.preventDefault(); move(m[e.key]); }
-  });
-
-  let tx=0, ty=0;
-  const gb = document.getElementById('game-board');
-  gb.addEventListener('touchstart', e=>{tx=e.touches[0].clientX;ty=e.touches[0].clientY;},{passive:true});
-  gb.addEventListener('touchend', e=>{
-    const dx=e.changedTouches[0].clientX-tx, dy=e.changedTouches[0].clientY-ty;
-    if (Math.max(Math.abs(dx),Math.abs(dy))<20) return;
-    move(Math.abs(dx)>Math.abs(dy)?(dx>0?'right':'left'):(dy>0?'down':'up'));
-  },{passive:true});
-
-  newGame();
 
   // ─── INIT ────────────────────────────────────────────────
   renderProjects();
